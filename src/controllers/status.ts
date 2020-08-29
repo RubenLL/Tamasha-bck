@@ -1,14 +1,10 @@
-import { Controller, Get} from '@overnightjs/core';
-import {Request,Response} from 'express';
-
-
+import { Controller, Get } from '@overnightjs/core';
+import { Request, Response } from 'express';
 
 @Controller('status')
 export class StatusController {
-    @Get('')
-    public getServerStatus(_:Request,res:Response):void{
-        res.send({data:'All Good!'});
-
-    }
-
+  @Get('')
+  public getServerStatus(_: Request, res: Response): void {
+    res.send({ data: 'All Good!' });
+  }
 }
