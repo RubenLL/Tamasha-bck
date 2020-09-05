@@ -3,6 +3,8 @@ import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import { StatusController } from './controllers/status';
 import { Application } from 'express';
+import * as database from '@src/database'
+
 export default class SetupServer extends Server {
   constructor(private port = 3000) {
     super();
@@ -14,11 +16,18 @@ export default class SetupServer extends Server {
     const statusController = new StatusController();
     this.addControllers([statusController]);
   }
-  public init(): void {
+  private async setupDatabase(): Promise<void>{
+    await database.connect();
+  }
+  public async  init(): Promise<void> {
     this.setupExpress();
     this.setupControllers();
+    await this.setupDatabase();
   }
   public getApp(): Application {
     return this.app;
+  }
+  public async close() :Promise<void>{
+    await database.close();
   }
 }
