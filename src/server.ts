@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { StatusController } from './controllers/status';
 import { Application } from 'express';
 import * as database from '@src/database'
+import { ShopController } from './controllers/shop';
 
 export default class SetupServer extends Server {
   constructor(private port = 3000) {
@@ -14,7 +15,8 @@ export default class SetupServer extends Server {
   }
   private setupControllers(): void {
     const statusController = new StatusController();
-    this.addControllers([statusController]);
+    const shopController = new ShopController();
+    this.addControllers([statusController,shopController]);
   }
   private async setupDatabase(): Promise<void>{
     await database.connect();
